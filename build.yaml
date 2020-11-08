@@ -1,0 +1,47 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: "2020-11-07T23:33:59Z"
+  labels:
+    app: www-asciidoc
+  name: www-asciidoc
+  namespace: enw-directory
+  resourceVersion: "158289"
+  selfLink: /apis/build.openshift.io/v1/namespaces/enw-directory/buildconfigs/www-asciidoc
+  uid: b5eca8bb-2151-11eb-a7ea-6eb1fb2e7a59
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: www-asciidoc:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: main
+      uri: https://github.com/lbamford/ocp-asciidoc.git
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: httpd:2.4
+        namespace: openshift
+    type: Source
+  triggers:
+  - imageChange:
+      lastTriggeredImageID: 172.30.1.1:5000/openshift/httpd@sha256:df111e9031b838fa9b5c120b07cba0f23188a539e9be91e020b0a9f77d65ec9e
+    type: ImageChange
+  - type: ConfigChange
+  - generic:
+      secret: 16fac3ca992d5c2a
+    type: Generic
+  - github:
+      secret: dda1ee0155427f90
+    type: GitHub
+status:
+  lastVersion: 2
