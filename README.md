@@ -7,9 +7,17 @@ The aim is to trigger re-deployments when the source code changes. So content is
 
 ## Steps
 
+* login to OpenShift
+** oc project ocp-directory
+
 * add asciidoctor/docker-asciidoctor to openshift internal register
+** oc import-image asciidoctor/docker-asciidoctor --confirm
+
 * run deploy yaml, this has a couple of init containers that pull the code then run asciidoctor
+** oc apply -f deploy.yml 
+
 * check all good in openshift
+
 * open route in web browser check the output
 
 
