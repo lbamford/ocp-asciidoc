@@ -59,6 +59,7 @@ spec:
         - https://github.com/lbamford/ocp-asciidoc.git
         - /data
         image: alpine/git
+        #image: asciidoctor/docker-asciidoctor
         imagePullPolicy: Always
         name: git-cloner
         resources: {}
