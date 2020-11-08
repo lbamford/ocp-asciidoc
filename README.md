@@ -7,10 +7,10 @@ The aim is to trigger re-deployments when the source code changes. So content is
 
 ## Steps
 
-. add asciidoctor/docker-asciidoctor to openshift internal register
-. run deploy yaml, this has a couple of init containers that pull the code then run asciidoctor
-. check all good in openshift
-. open route in web browser check the output
+* add asciidoctor/docker-asciidoctor to openshift internal register
+* run deploy yaml, this has a couple of init containers that pull the code then run asciidoctor
+* check all good in openshift
+* open route in web browser check the output
 
 
 ## Init Containers
