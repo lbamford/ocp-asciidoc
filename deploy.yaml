@@ -1,19 +1,10 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","metadata":{"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"},"creationTimestamp":"2020-11-07T23:33:59Z","generation":3,"labels":{"app":"www-asciidoc"},"name":"www-asciidoc","namespace":"enw-directory","resourceVersion":"165986","selfLink":"/apis/apps.openshift.io/v1/namespaces/enw-directory/deploymentconfigs/www-asciidoc","uid":"b5ea84a1-2151-11eb-a7ea-6eb1fb2e7a59"},"spec":{"replicas":1,"selector":{"deploymentconfig":"www-asciidoc"},"strategy":{"activeDeadlineSeconds":21600,"resources":{},"rollingParams":{"intervalSeconds":1,"maxSurge":"25%","maxUnavailable":"25%","timeoutSeconds":600,"updatePeriodSeconds":1},"type":"Rolling"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"www-asciidoc","deploymentconfig":"www-asciidoc"}},"spec":{"containers":[{"image":"172.30.1.1:5000/enw-directory/www-asciidoc@sha256:3efbe04bbd5f285441d680a49fd386b38206433ad841a67553cc02aca391e165","imagePullPolicy":"Always","name":"www-asciidoc","ports":[{"containerPort":8080,"protocol":"TCP"},{"containerPort":8443,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/opt/app-root/src","name":"www-data"}]}],"dnsPolicy":"ClusterFirst","initContainers":[{"args":["clone","--single-branch","--","https://github.com/lbamford/ocp-asciidoc.git","/data"],"image":"alpine/git","imagePullPolicy":"Always","name":"git-cloner","resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/data","name":"www-data"}]},{"command":["bash","-c","sleep 15; asciidoctor test.adoc;"],"image":"asciidoctor/docker-asciidoctor","name":"init-asciidoctor","volumeMounts":[{"mountPath":"/documents","name":"www-data"}]}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"emptyDir":{},"name":"www-data"}]}},"test":false,"triggers":[{"imageChangeParams":{"automatic":true,"containerNames":["www-asciidoc"],"from":{"kind":"ImageStreamTag","name":"www-asciidoc:latest","namespace":"enw-directory"},"lastTriggeredImage":"172.30.1.1:5000/enw-directory/www-asciidoc@sha256:3efbe04bbd5f285441d680a49fd386b38206433ad841a67553cc02aca391e165"},"type":"ImageChange"},{"type":"ConfigChange"}]},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2020-11-07T23:36:09Z","lastUpdateTime":"2020-11-07T23:36:09Z","message":"Deployment config has minimum availability.","status":"True","type":"Available"},{"lastTransitionTime":"2020-11-08T00:06:47Z","lastUpdateTime":"2020-11-08T00:06:47Z","message":"replication controller \"www-asciidoc-2\" is progressing","reason":"ReplicationControllerUpdated","status":"True","type":"Progressing"}],"details":{"causes":[{"type":"ConfigChange"}],"message":"config change"},"latestVersion":2,"observedGeneration":3,"readyReplicas":1,"replicas":2,"unavailableReplicas":1,"updatedReplicas":1}}
-    openshift.io/generated-by: OpenShiftWebConsole
-  creationTimestamp: "2020-11-08T00:42:44Z"
-  generation: 2
   labels:
     app: www-asciidoc
   name: www-asciidoc
-  namespace: enw-directory
-  resourceVersion: "175499"
-  selfLink: /apis/apps.openshift.io/v1/namespaces/enw-directory/deploymentconfigs/www-asciidoc
-  uid: 50d659e6-215b-11eb-a7ea-6eb1fb2e7a59
+  namespace: ocp-directory
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -37,7 +28,7 @@ spec:
         deploymentconfig: www-asciidoc
     spec:
       containers:
-      - image: 172.30.1.1:5000/enw-directory/www-asciidoc@sha256:3efbe04bbd5f285441d680a49fd386b38206433ad841a67553cc02aca391e165
+      - image: centos/httpd-24-centos7
         imagePullPolicy: Always
         name: www-asciidoc
         ports:
@@ -71,7 +62,7 @@ spec:
       - command:
         - bash
         - -c
-        - sleep 15; asciidoctor *.adoc;
+        - sleep 2; asciidoctor *.adoc;
         image: asciidoctor/docker-asciidoctor
         imagePullPolicy: Always
         name: init-asciidoctor
@@ -89,39 +80,3 @@ spec:
       - emptyDir: {}
         name: www-data
   test: false
-  triggers:
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - www-asciidoc
-      from:
-        kind: ImageStreamTag
-        name: www-asciidoc:latest
-        namespace: enw-directory
-      lastTriggeredImage: 172.30.1.1:5000/enw-directory/www-asciidoc@sha256:3efbe04bbd5f285441d680a49fd386b38206433ad841a67553cc02aca391e165
-    type: ImageChange
-  - type: ConfigChange
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2020-11-08T00:43:09Z"
-    lastUpdateTime: "2020-11-08T00:43:09Z"
-    message: Deployment config has minimum availability.
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2020-11-08T00:42:46Z"
-    lastUpdateTime: "2020-11-08T00:43:10Z"
-    message: replication controller "www-asciidoc-1" successfully rolled out
-    reason: NewReplicationControllerAvailable
-    status: "True"
-    type: Progressing
-  details:
-    causes:
-    - type: ConfigChange
-    message: config change
-  latestVersion: 1
-  observedGeneration: 2
-  readyReplicas: 1
-  replicas: 1
-  unavailableReplicas: 0
-  updatedReplicas: 1

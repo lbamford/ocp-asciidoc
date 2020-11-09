@@ -1,6 +1,8 @@
 # ocp-asciidoc
 Experiment with Docker, OpenShift, Apache and Asciidoc 
 
+***Work in progress***
+
 From asciidoc to published web content, pdf etc.
 
 The aim is to trigger re-deployments when the source code changes. So content is automatically updated with latest asciidoc generated output.
