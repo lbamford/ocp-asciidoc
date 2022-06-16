@@ -29,4 +29,4 @@ https://docs.openshift.com/container-platform/4.1/nodes/containers/nodes-contain
 
 Init containers are useful for checking certain preconditions are met before starting the main container, for example you might want to know a database is available before starting a web service. 
 
-They can also be used for injecting content into the main container by using temporary shared storage, that is mounted and available to all containers (withing the pod) during initialisation.
+They can also be used for injecting content into the main container by using temporary shared storage, that is mounted and available to all containers (within the pod) during initialisation.
